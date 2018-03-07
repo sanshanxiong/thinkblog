@@ -1,0 +1,83 @@
+{include file="common\header" /}
+<div class="header">
+
+    <h1 class="page-title">Users</h1>
+    <ul class="breadcrumb">
+        <li><a href="index.html">Home</a> </li>
+        <li class="active">Users</li>
+    </ul>
+
+</div>
+<div class="main-content">
+
+    <div class="btn-toolbar list-toolbar">
+        <a href="{:url('category/add')}" class="btn btn-primary"><i class="fa fa-plus"></i> 新增栏目</a>
+        <button class="btn btn-default">Import</button>
+        <button class="btn btn-default">Export</button>
+        <div class="btn-group">
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th >栏目名称</th>
+            <th>栏目类型</th>
+            <th style="width: 3.5em;">操作</th>
+        </tr>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="categories" id="item"}
+        <tr>
+            <td>{$item.id}</td>
+            <td>{$item.name}</td>
+            {if condition="($item.type == 1)"}  <td>列表栏目</td>
+            {else /} <td>话题栏目</td>
+            {/if}
+            <td>
+                <a href="{:url('edit',['id'=>$item.id])}"  ><i class="fa fa-pencil"></i></a>
+                <a href="#"  data-href="{:url('delete',['id'=>$item.id])}"
+                   role="button" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+
+
+    <ul class="pagination">
+        {$categories->render()}
+    </ul>
+
+
+
+    <div class="modal small fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel2">Delete Confirmation</h3>
+                </div>
+                <div class="modal-body">
+                    <p class="error-text"><i class="fa fa-warning modal-icon"></i>Are you sure you want to delete the user?<br>This cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <!--这里的qcx_deleteok 只是为了在下面的js中标识出这个a标签-->
+                    <a class="btn btn-danger  qcx_deleteok"   >Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript">
+        //show.bs.modal 是模态框中，它在调用 show 方法后触发
+        $('#myModal').on('show.bs.modal', function(e) {
+            //relatedTarget 事件属性返回与事件的目标节点相关的节点。
+            $(this).find('.qcx_deleteok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    </script>
+
+</div>
+{include file="common\footer" /}

@@ -1,0 +1,111 @@
+{include file="common\header" /}
+<!-- 配置文件 -->
+<script type="text/javascript" src="__PUBLIC__\components\ueditor\ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__PUBLIC__\components\ueditor\ueditor.all.js"></script>
+
+<script language="javascript" type="text/javascript"  src="__PUBLIC__\components\My97DatePicker\WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__\components\My97DatePicker\skin\WdatePicker.css" >
+
+<div class="header">
+    <h1 class="page-title">文章管理</h1>
+</div>
+<div class="main-content">
+    <!-- form begin -->
+    <form id="tab" method="post" action=""  enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>文章名称</label>
+                    <input type="text" name="title"  value="{$article.title}"  class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>关键词</label>
+                    <input type="text" name="keywords"  value="{$article.keywords}"  class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>描述</label>
+                    <input type="text" name="descs"  value="{$article.descs}"  class="form-control">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>缩略图</label>
+                    <input type="file" name="pic" class="form-control">
+
+
+                </div>
+                <div class="form-group">
+                    <label>栏目</label>
+                    <select name="cateid"  class="form-control">
+                    {volist name="categories" id="subitem"}
+                        <option value="{$subitem.id}"  {if condition="($subitem.id ==$article.cateid) "} selected  {/if}>
+                            {$subitem.name}</option>
+
+                    {/volist}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>到期时间</label>
+                    <input name="endtime" type="text"   value="{:date('Y-m-d',$article.endtime)}" readonly  class="Wdate  form-control"
+                           onfocus="WdatePicker( {skin:'whyGreen', minDate:'%yyyy-%M-%dd' }  ) ">
+                </div>
+            </div>
+            <div class="col-md-4">
+               <div style="padding: 20px; ">
+                  {if condition="(!empty($article.pic)) "}
+                     <image src="__PUBLIC__/uploads/{$article.pic}" height="150"  width="150"  style="border: 1px solid brown"  ></image>
+                  {else /}
+                     暂无缩略图
+                  {/if}
+               </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div>
+                    内容
+                    <!-- 加载编辑器的容器 -->
+                    <textarea   id="container" name="content"   ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-3">
+                <div class="btn-toolbar list-toolbar">
+                    <button class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                    <a href="#myModal" data-toggle="modal" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--  form end -->
+
+    <div class="modal small fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Delete Confirmation</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p class="error-text"><i class="fa fa-warning modal-icon"></i>Are you sure you want to delete the user?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <a href="{:url('delete',['id'=>$article.id])}" class="btn btn-danger" >Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue = UE.getEditor('container',{
+        initialFrameHeight:300  });
+</script>
+
+{include file="common\footer" /}

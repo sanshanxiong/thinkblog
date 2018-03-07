@@ -1,0 +1,50 @@
+{include file="common\header" /}
+
+<div class="header">
+    <h1 class="page-title">链接管理</h1>
+</div>
+<div class="main-content">
+    <!-- form begin -->
+    <form id="tab" method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="hidden" name="id"  value="{$link.id}">
+                    <label>链接名称</label>
+                    <input type="text" name="name"   value="{$link.name}" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>链接地址</label>
+                    <input type="text" name="url"  value="{$link.url}"  class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    是否显示
+                    <input type="checkbox" name="show"
+                           {if condition="$link.show==1"} checked {/if} >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1">
+                <div class="btn-toolbar list-toolbar">
+                    <button class="btn btn-primary"><i class="fa fa-save"></i> 添加</button>
+                    <a href="{:url('lst')}"   class="btn btn-danger">返回</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--  form end -->
+
+
+</div>
+
+
+{include file="common\footer" /}
